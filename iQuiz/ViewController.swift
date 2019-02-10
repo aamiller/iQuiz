@@ -10,9 +10,14 @@ import UIKit
 
 class SubjectsDataSource : NSObject, UITableViewDataSource
 {
-    var data : [String] = ["Mathematics", "Marvel Super Heros", "Mathematics"]
-    init(_ elements : [String]) {
-        data = elements
+    var subjectNames : [String] = []
+    var photoPaths : [String] = []
+    var shortDescriptions : [String] = []
+
+    init(_ subjectNames : [String], _ photoPaths : [String], _ shortDescriptions : [String]) {
+        self.subjectNames = subjectNames
+        self.photoPaths = photoPaths
+        self.shortDescriptions = shortDescriptions
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -21,13 +26,14 @@ class SubjectsDataSource : NSObject, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count;
+        return subjectNames.count;
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellReuseIdentifier")!
         
-        cell.textLabel?.text = data[indexPath.row]
+        cell.textLabel?.text = subjectNames[indexPath.row]
+        cell.detailTextLabel?.text = shortDescriptions[indexPath.row]
         
         return cell
     }
@@ -39,7 +45,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var MainTableView: UITableView!
     
-    let dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Mathematics"])
+    let dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Science"], ["icon1", "icon2", "icon3"], ["Don't worry, we won't make you do calculus... probably.", "You know what Scarlet Witch's real name is, right?", "Can you science it?"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
