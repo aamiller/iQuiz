@@ -34,6 +34,7 @@ class SubjectsDataSource : NSObject, UITableViewDataSource
         
         cell.textLabel?.text = subjectNames[indexPath.row]
         cell.detailTextLabel?.text = shortDescriptions[indexPath.row]
+        cell.imageView?.image = UIImage(named: photoPaths[indexPath.row])
         
         return cell
     }
@@ -45,7 +46,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var MainTableView: UITableView!
     
-    let dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Science"], ["icon1", "icon2", "icon3"], ["Don't worry, we won't make you do calculus... probably.", "You know what Scarlet Witch's real name is, right?", "Can you science it?"])
+    let dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Science"], ["paper.png", "superhero.png", "bulb.png"], ["Don't worry, we won't make you do calculus... probably.", "You know what Scarlet Witch's real name is, right?", "Can you science it?"])
     
     override func viewDidLoad() {
         super.viewDidLoad()
