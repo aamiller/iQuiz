@@ -6,18 +6,40 @@
 //  Copyright © 2019 edu.washington. All rights reserved.
 //
 
+// todo: error handling, clean up code, check if imgs can repeat
+
 import UIKit
+import Foundation
+
+struct QuizDetails : Codable {
+    let title : String
+    let desc : String
+    let questions : [QuestionDetails]
+}
+
+struct QuestionDetails : Codable {
+    let text : String
+    let answer : String
+    let answers : [String]
+}
 
 class SubjectsDataSource : NSObject, UITableViewDataSource
 {
     var subjectNames : [String] = []
     var photoPaths : [String] = []
     var shortDescriptions : [String] = []
-
-    init(_ subjectNames : [String], _ photoPaths : [String], _ shortDescriptions : [String]) {
-        self.subjectNames = subjectNames
-        self.photoPaths = photoPaths
-        self.shortDescriptions = shortDescriptions
+    
+    init(_ QuizDetails : [QuizDetails]) {
+        
+        var image_index = 0
+        let photoPaths = ["paper.png", "superhero.png", "bulb.png"]
+        
+        for quiz in QuizDetails {
+            self.subjectNames.append(quiz.title)
+            self.shortDescriptions.append(quiz.desc)
+            self.photoPaths.append(photoPaths[image_index])
+            image_index = (image_index + 1) % 3
+        }
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -40,23 +62,46 @@ class SubjectsDataSource : NSObject, UITableViewDataSource
     }
 }
 
-class ViewController: UIViewController {
-
+class ViewController: UIViewController, UITableViewDelegate {
+    
     @IBOutlet weak var ToolBar_Settings: UIBarButtonItem!
     
-    @IBOutlet weak var MainTableView: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     
-    let dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Science"], ["paper.png", "superhero.png", "bulb.png"], ["Don't worry, we won't make you do calculus... probably.", "You know what Scarlet Witch's real name is, right?", "Can you science it?"])
+    var quizDetails : [QuizDetails] = []
+    
+    var dataSource : SubjectsDataSource? = nil
+
+    //TODO    var dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Science"], ["paper.png", "superhero.png", "bulb.png"], ["Don't worry, we won't make you do calculus... probably.", "You know what Scarlet Witch's real name is, right?", "Can you science it?"])
+    //
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
-     
-        MainTableView.dataSource = dataSource
-        MainTableView.tableFooterView = UIView()
-
+        // Code adapted from https://medium.com/@nimjea/json-parsing-in-swift-2498099b78f
+        guard let url = URL(string: "https://tednewardsandbox.site44.com/questions.json") else {return}
+        let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let dataResponse = data,
+                error == nil else {
+                    print(error?.localizedDescription ?? "Response Error")
+                    return }
+            do {
+                self.quizDetails = try JSONDecoder().decode([QuizDetails].self, from:dataResponse)
+                self.dataSource = SubjectsDataSource(self.quizDetails)
+            } catch let parsingError {
+                print("Error", parsingError)
+            }
+        }
+        task.resume()
+        sleep(2)
+        tableView.dataSource = dataSource
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
     }
     
+    
+    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    //        print(indexPath)
+    //    }
     
     @IBAction func SettingsButtonAction(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
@@ -67,6 +112,19 @@ class ViewController: UIViewController {
     }
     
     
-  
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // verify that this is the right segue or going to the right view controller destination
+        switch segue.identifier {
+        case "MainQuizToFirstAnswerSegue":
+            let firstQuiz = segue.destination as! QuestionViewController
+            firstQuiz.questionData = ["Q", "A", "B", "C", "D"]
+            //        case "UpdateButtonSegue":
+            //            let buttonUpdate = segue.destination as! UpdateButtonsViewController
+            //            buttonUpdate.gameButtonValues = increment_vals
+        //            buttonUpdate.activePlayerCount = player_count
+        default: break
+        }
+    }
+    
 }
 

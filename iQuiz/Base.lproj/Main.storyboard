@@ -55,6 +55,9 @@
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="LPl-sn-5A6" kind="show" identifier="MainQuizToFirstAnswerSegue" id="2QQ-kV-REC"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -72,17 +75,18 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="MainTableView" destination="h2Q-Ad-psj" id="0qI-8J-5jN"/>
                         <outlet property="ToolBar_Settings" destination="lea-Yp-NsZ" id="wN8-fS-17N"/>
+                        <outlet property="tableView" destination="h2Q-Ad-psj" id="XvR-Nv-DEN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-316" y="134"/>
         </scene>
         <!--Question View Controller-->
         <scene sceneID="ylU-kc-2rH">
             <objects>
-                <viewController id="LPl-sn-5A6" customClass="QuestionViewController" sceneMemberID="viewController">
+                <viewController id="LPl-sn-5A6" customClass="QuestionViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jP8-mW-ktZ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -211,6 +215,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="SMR-Lh-DdZ"/>
                     </view>
+                    <connections>
+                        <outlet property="AnswerSelectorSegment" destination="yps-PQ-vVc" id="HKL-di-9cr"/>
+                        <outlet property="SubmitQuestionChoiceButton" destination="0IR-14-rKp" id="SF3-vs-g4P"/>
+                        <outletCollection property="QuestionChoices" destination="WEc-4d-e0G" collectionClass="NSMutableArray" id="VDq-q4-APD"/>
+                        <outletCollection property="QuestionChoices" destination="9uu-lQ-e1i" collectionClass="NSMutableArray" id="35Y-GH-is8"/>
+                        <outletCollection property="QuestionChoices" destination="iOl-HX-J47" collectionClass="NSMutableArray" id="b7I-ND-6eY"/>
+                        <outletCollection property="QuestionChoices" destination="ENN-zf-Luz" collectionClass="NSMutableArray" id="Cw9-dP-JHd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c5U-dl-3Vp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
