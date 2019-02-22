@@ -6,7 +6,7 @@
 //  Copyright © 2019 edu.washington. All rights reserved.
 //
 
-// todo: error handling, clean up code, check if imgs can repeat
+// todo: error handling, clean up code, check if imgs can repeat TODO - fix hacky
 
 import UIKit
 import Foundation
@@ -71,7 +71,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     var quizDetails : [QuizDetails] = []
     
     var dataSource : SubjectsDataSource? = nil
-
+    
     //TODO    var dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Science"], ["paper.png", "superhero.png", "bulb.png"], ["Don't worry, we won't make you do calculus... probably.", "You know what Scarlet Witch's real name is, right?", "Can you science it?"])
     //
     
@@ -92,16 +92,14 @@ class ViewController: UIViewController, UITableViewDelegate {
             }
         }
         task.resume()
-        sleep(2)
+        
+        sleep(2) // TODO - fix hacky thing
+        
         tableView.dataSource = dataSource
         tableView.delegate = self
         tableView.tableFooterView = UIView()
     }
     
-    
-    //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //        print(indexPath)
-    //    }
     
     @IBAction func SettingsButtonAction(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
@@ -111,20 +109,29 @@ class ViewController: UIViewController, UITableViewDelegate {
         self.present(alert, animated: true, completion: nil)
     }
     
-    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // verify that this is the right segue or going to the right view controller destination
-        switch segue.identifier {
-        case "MainQuizToFirstAnswerSegue":
-            let firstQuiz = segue.destination as! QuestionViewController
-            firstQuiz.questionData = ["Q", "A", "B", "C", "D"]
-            //        case "UpdateButtonSegue":
-            //            let buttonUpdate = segue.destination as! UpdateButtonsViewController
-            //            buttonUpdate.gameButtonValues = increment_vals
-        //            buttonUpdate.activePlayerCount = player_count
-        default: break
+        if let indexPath = tableView.indexPathForSelectedRow{
+            let selectedRow = indexPath.row
+            let firstQuizVC = segue.destination as! QuestionViewController
+            firstQuizVC.quizDetails = quizDetails[selectedRow]
         }
     }
     
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        print("X")
+//        performSegue(withIdentifier: "MainQuizToFirstAnswerSegue", sender: indexPath)
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        switch segue.identifier {
+//            case "MainQuizToFirstAnswerSegue":
+//                let firstQuiz = segue.destination as! QuestionViewController
+//                let indexPath = sender as! IndexPath
+//                firstQuiz.quizDetails = quizDetails[indexPath[1]]
+//            print("Y")
+//            default: break
+//        }
+//    }
 }
+    
 
