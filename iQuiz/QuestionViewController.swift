@@ -12,17 +12,12 @@ class QuestionViewController: UIViewController {
     
     
     @IBOutlet weak var QuestionText: UILabel!
-    
     @IBOutlet var QuestionChoices: [UILabel]!
-    
     @IBOutlet weak var AnswerSelectorSegment: UISegmentedControl!
-    
     @IBOutlet weak var SubmitQuestionChoiceButton: UIButton!
     
     var quizDetails : QuizDetails? = nil
-    
     var currQuestionData : QuestionDetails? = nil
-    
     var context : Context? = nil
     
     override func viewDidLoad() {
@@ -39,7 +34,6 @@ class QuestionViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         switch segue.identifier {
             case "QuestionToAnswerSegue":
-                print(segue.destination)
                 let answerVC = segue.destination as! AnswerViewController
                 let currSelectedAnswer = AnswerSelectorSegment.selectedSegmentIndex
                 answerVC.lastAnswer = currSelectedAnswer
@@ -53,7 +47,8 @@ class QuestionViewController: UIViewController {
                    newNumWrong = newNumWrong + 1
                 }
                 
-                answerVC.context = Context(currQuestion: context!.currQuestion + 1, currSubject: context!.currSubject, numCorrect: newNumCorrect, numWrong: newNumWrong)
+                answerVC.context = Context(currQuestion: context!.currQuestion, currSubject: context!.currSubject, numCorrect: newNumCorrect, numWrong: newNumWrong)
+                answerVC.quizDetails = quizDetails
             default: break
         }
     }

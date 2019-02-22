@@ -72,15 +72,10 @@ class SubjectsDataSource : NSObject, UITableViewDataSource
 class ViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet weak var ToolBar_Settings: UIBarButtonItem!
-    
     @IBOutlet weak var tableView: UITableView!
     
     var quizDetails : [QuizDetails] = []
-    
     var dataSource : SubjectsDataSource? = nil
-    
-    //TODO    var dataSource = SubjectsDataSource(["Mathematics", "Marvel Super Heros", "Science"], ["paper.png", "superhero.png", "bulb.png"], ["Don't worry, we won't make you do calculus... probably.", "You know what Scarlet Witch's real name is, right?", "Can you science it?"])
-    //
     
     override func viewDidLoad() {
         super.viewDidLoad()

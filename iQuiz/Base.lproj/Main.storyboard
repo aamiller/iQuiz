@@ -115,7 +115,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="A question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WEc-4d-e0G">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="A question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WEc-4d-e0G">
                                         <rect key="frame" x="25.5" y="0.0" width="339.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
@@ -124,6 +124,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="WEc-4d-e0G" firstAttribute="top" secondItem="zya-pk-cSg" secondAttribute="top" constant="10" id="Hhv-fj-GWW"/>
+                                    <constraint firstItem="WEc-4d-e0G" firstAttribute="leading" secondItem="fcs-3x-Gzh" secondAttribute="trailing" id="ZXk-oO-7Nz"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CXO-J6-U2s">
@@ -135,13 +136,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="B question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="9uu-lQ-e1i">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="B question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9uu-lQ-e1i">
                                         <rect key="frame" x="24" y="0.0" width="341" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="9uu-lQ-e1i" firstAttribute="leading" secondItem="A4Y-5E-bYE" secondAttribute="trailing" id="LeP-x7-m2M"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ngi-Ab-wh5">
                                 <rect key="frame" x="5" y="188" width="365" height="24"/>
@@ -159,6 +163,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="iOl-HX-J47" firstAttribute="leading" secondItem="qE0-gB-4y7" secondAttribute="trailing" id="dx3-Bu-NB5"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VMs-7D-Bxb">
                                 <rect key="frame" x="5" y="215" width="365" height="24"/>
@@ -169,13 +176,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="D question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="ENN-zf-Luz">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="D question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ENN-zf-Luz">
                                         <rect key="frame" x="25" y="0.0" width="340" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="ENN-zf-Luz" firstAttribute="leading" secondItem="rar-SZ-QL9" secondAttribute="trailing" id="83U-4B-jeC"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0IR-14-rKp">
                                 <rect key="frame" x="163" y="307" width="71" height="30"/>
@@ -183,7 +193,7 @@
                                 <color key="tintColor" red="0.1215686277" green="0.1294117719" blue="0.1411764771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
-                                    <segue destination="Zo2-0d-rt2" kind="show" id="Xks-QI-yec"/>
+                                    <segue destination="Zo2-0d-rt2" kind="show" identifier="QuestionToAnswerSegue" id="Xks-QI-yec"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -256,7 +266,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="A question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="XOX-kg-sgd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="A question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XOX-kg-sgd">
                                         <rect key="frame" x="25.5" y="0.0" width="339.5" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
@@ -265,6 +275,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="XOX-kg-sgd" firstAttribute="top" secondItem="Gmo-lY-OsS" secondAttribute="top" constant="10" id="yfK-qr-7RU"/>
+                                    <constraint firstItem="XOX-kg-sgd" firstAttribute="leading" secondItem="wWI-q3-tya" secondAttribute="trailing" id="ywu-Ia-G0f"/>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hop-ag-3vP">
@@ -276,13 +287,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="B question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="wl0-Dt-HDd">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="B question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wl0-Dt-HDd">
                                         <rect key="frame" x="24" y="0.0" width="341" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="wl0-Dt-HDd" firstAttribute="leading" secondItem="nwm-gj-72Y" secondAttribute="trailing" id="DL9-5A-Nx9"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pb9-gI-fei">
                                 <rect key="frame" x="5" y="149" width="365" height="24"/>
@@ -300,6 +314,9 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="ekV-a8-6NK" firstAttribute="leading" secondItem="T5o-s9-Sco" secondAttribute="trailing" id="KIO-i3-sh8"/>
+                                </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pY8-J1-1za">
                                 <rect key="frame" x="5" y="178" width="365" height="24"/>
@@ -310,13 +327,16 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="D question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="BM5-nX-NEk">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="D question text" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BM5-nX-NEk">
                                         <rect key="frame" x="25" y="0.0" width="340" height="24"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="BM5-nX-NEk" firstAttribute="leading" secondItem="flg-o3-86m" secondAttribute="trailing" id="dZq-Wf-iKQ"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pye-5x-tu4">
                                 <rect key="frame" x="148" y="294" width="79" height="30"/>
@@ -347,6 +367,13 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="h7p-iU-N7U"/>
                     </view>
+                    <connections>
+                        <outlet property="QuestionTextLabel" destination="dLw-34-YGW" id="qJq-tZ-rTe"/>
+                        <outletCollection property="AnswerTextLabels" destination="XOX-kg-sgd" collectionClass="NSMutableArray" id="IZO-JP-XbM"/>
+                        <outletCollection property="AnswerTextLabels" destination="wl0-Dt-HDd" collectionClass="NSMutableArray" id="qNM-W7-bgs"/>
+                        <outletCollection property="AnswerTextLabels" destination="ekV-a8-6NK" collectionClass="NSMutableArray" id="ciB-na-x3c"/>
+                        <outletCollection property="AnswerTextLabels" destination="BM5-nX-NEk" collectionClass="NSMutableArray" id="NE5-KK-CPM"/>
+                    </connections>
                 </viewController>
             </objects>
             <point key="canvasLocation" x="1560.8" y="133.5832083958021"/>
