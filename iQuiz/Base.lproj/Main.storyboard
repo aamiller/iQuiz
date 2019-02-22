@@ -187,9 +187,12 @@
                                     <constraint firstItem="ENN-zf-Luz" firstAttribute="leading" secondItem="rar-SZ-QL9" secondAttribute="trailing" id="83U-4B-jeC"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0IR-14-rKp">
-                                <rect key="frame" x="163" y="307" width="71" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0IR-14-rKp">
+                                <rect key="frame" x="137.5" y="259" width="100" height="30"/>
                                 <color key="backgroundColor" red="0.4669708964" green="1" blue="0.64115576409999997" alpha="0.83855083630000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="NGq-k4-GeZ"/>
+                                </constraints>
                                 <color key="tintColor" red="0.1215686277" green="0.1294117719" blue="0.1411764771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Submit"/>
                                 <connections>
@@ -245,7 +248,6 @@
         <!--Answer View Controller-->
         <scene sceneID="eov-P3-yZl">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="MOV-7c-Rf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Zo2-0d-rt2" customClass="AnswerViewController" customModule="iQuiz" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Cw5-m6-AsA">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -338,11 +340,18 @@
                                     <constraint firstItem="BM5-nX-NEk" firstAttribute="leading" secondItem="flg-o3-86m" secondAttribute="trailing" id="dZq-Wf-iKQ"/>
                                 </constraints>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pye-5x-tu4">
-                                <rect key="frame" x="148" y="294" width="79" height="30"/>
-                                <color key="backgroundColor" red="0.4669708964" green="1" blue="0.64115576409999997" alpha="0.83855083630000005" colorSpace="custom" customColorSpace="sRGB"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pye-5x-tu4">
+                                <rect key="frame" x="147.5" y="232" width="80" height="30"/>
+                                <color key="backgroundColor" red="0.85547015129408988" green="0.83751756493062435" blue="1" alpha="0.83855083630000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="Xfp-uJ-mZJ"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="100" id="yQW-ZA-EK5"/>
+                                </constraints>
                                 <color key="tintColor" red="0.1215686277" green="0.1294117719" blue="0.1411764771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Submit"/>
+                                <state key="normal" title="Next"/>
+                                <connections>
+                                    <action selector="NextButtonPress:" destination="Zo2-0d-rt2" eventType="touchUpInside" id="B0X-WN-t4n"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -373,15 +382,18 @@
                         <outletCollection property="AnswerTextLabels" destination="wl0-Dt-HDd" collectionClass="NSMutableArray" id="qNM-W7-bgs"/>
                         <outletCollection property="AnswerTextLabels" destination="ekV-a8-6NK" collectionClass="NSMutableArray" id="ciB-na-x3c"/>
                         <outletCollection property="AnswerTextLabels" destination="BM5-nX-NEk" collectionClass="NSMutableArray" id="NE5-KK-CPM"/>
+                        <segue destination="LPl-sn-5A6" kind="show" identifier="AnswerToQuestionSegue" id="FGQ-4G-bho"/>
+                        <segue destination="KEb-jF-Obc" kind="show" identifier="AnswerToFinishedSegue" id="hih-CB-e8r"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MOV-7c-Rf4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1560.8" y="133.5832083958021"/>
         </scene>
         <!--Finished View Controller-->
         <scene sceneID="WWs-rZ-yJ7">
             <objects>
-                <viewController id="KEb-jF-Obc" customClass="FinishedViewController" sceneMemberID="viewController">
+                <viewController id="KEb-jF-Obc" customClass="FinishedViewController" customModule="iQuiz" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dju-sZ-Dhq">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -434,10 +446,16 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eCv-Dn-8we">
-                                <rect key="frame" x="129.5" y="236" width="116" height="30"/>
+                                <rect key="frame" x="112.5" y="236" width="150" height="30"/>
                                 <color key="backgroundColor" red="0.70842143359999998" green="0.9441277884" blue="1" alpha="0.83855083630000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="dIG-Ty-9QJ"/>
+                                </constraints>
                                 <color key="tintColor" red="0.1215686277" green="0.1294117719" blue="0.1411764771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Back to Quiz List"/>
+                                <connections>
+                                    <segue destination="BYZ-38-t0r" kind="show" id="WQT-KX-cuk"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -465,4 +483,7 @@
             <point key="canvasLocation" x="2257" y="134"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="FGQ-4G-bho"/>
+    </inferredMetricsTieBreakers>
 </document>

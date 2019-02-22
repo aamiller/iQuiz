@@ -21,12 +21,8 @@ class AnswerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         currQuestionData = quizDetails!.questions[context!.currQuestion]
+        QuestionTextLabel.text = currQuestionData!.text
         
-        print("ans")
-        print(currQuestionData!.answer)
-        print(String(lastAnswer))
-        
-
         for i in 0...3 {
             let currLabel = AnswerTextLabels[i]
             currLabel.text = currQuestionData!.answers[i]
@@ -38,9 +34,28 @@ class AnswerViewController: UIViewController {
                 currLabel.backgroundColor = UIColor.green
             }
         }
-
-        QuestionTextLabel.text = currQuestionData!.text
-
-
+    }
+    
+    @IBAction func NextButtonPress(_ sender: Any) {
+        // If all questions done
+        if context!.currQuestion + 1 == quizDetails?.questions.count {
+            performSegue(withIdentifier: "AnswerToFinishedSegue", sender: self)
+        } else { // Questions remain
+            performSegue(withIdentifier: "AnswerToQuestionSegue", sender: self)
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+        case "AnswerToQuestionSegue":
+            let questionVC = segue.destination as! QuestionViewController
+            questionVC.quizDetails = quizDetails
+            questionVC.context = Context(currQuestion: context!.currQuestion + 1, currSubject: context!.currSubject, numCorrect: context!.numCorrect, numWrong: context!.numWrong)
+        case "AnswerToFinishedSegue":
+            let finishedVC = segue.destination as! FinishedViewController
+            finishedVC.numWrong = context!.numWrong
+            finishedVC.numCorrect = context!.numCorrect
+        default: break
+        }
     }
 }

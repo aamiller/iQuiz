@@ -119,22 +119,6 @@ class ViewController: UIViewController, UITableViewDelegate {
             firstQuizVC.context = Context(currQuestion: 0, currSubject: indexPath.row, numCorrect: 0, numWrong: 0)
         }
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        print("X")
-//        performSegue(withIdentifier: "MainQuizToFirstAnswerSegue", sender: indexPath)
-//    }
-//
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        switch segue.identifier {
-//            case "MainQuizToFirstAnswerSegue":
-//                let firstQuiz = segue.destination as! QuestionViewController
-//                let indexPath = sender as! IndexPath
-//                firstQuiz.quizDetails = quizDetails[indexPath[1]]
-//            print("Y")
-//            default: break
-//        }
-//    }
 }
     
 
