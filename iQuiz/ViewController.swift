@@ -85,17 +85,20 @@ class ViewController: UIViewController, UITableViewDelegate {
             guard let dataResponse = data,
                 error == nil else {
                     print(error?.localizedDescription ?? "Response Error")
-                    return }
+                    return
+            }
             do {
                 self.quizDetails = try JSONDecoder().decode([QuizDetails].self, from:dataResponse)
                 self.dataSource = SubjectsDataSource(self.quizDetails)
             } catch let parsingError {
                 print("Error", parsingError)
+                
             }
         }
         task.resume()
+
+        sleep(4) // TODO - fix hacky thing
         
-        sleep(2) // TODO - fix hacky thing
         
         tableView.dataSource = dataSource
         tableView.delegate = self

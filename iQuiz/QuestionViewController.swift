@@ -41,7 +41,7 @@ class QuestionViewController: UIViewController {
                 // Check if answer is correct
                 var newNumCorrect = context!.numCorrect
                 var newNumWrong = context!.numWrong
-                if currQuestionData?.answer == String(currSelectedAnswer) {
+                if currQuestionData?.answer == String(currSelectedAnswer + 1) {
                    newNumCorrect = newNumCorrect + 1
                 } else {
                    newNumWrong = newNumWrong + 1
