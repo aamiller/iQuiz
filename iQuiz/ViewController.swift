@@ -23,6 +23,13 @@ struct QuestionDetails : Codable {
     let answers : [String]
 }
 
+struct Context {
+    var currQuestion : Int
+    var currSubject : Int // Number for subject
+    var numCorrect : Int
+    var numWrong: Int
+}
+
 class SubjectsDataSource : NSObject, UITableViewDataSource
 {
     var subjectNames : [String] = []
@@ -114,6 +121,7 @@ class ViewController: UIViewController, UITableViewDelegate {
             let selectedRow = indexPath.row
             let firstQuizVC = segue.destination as! QuestionViewController
             firstQuizVC.quizDetails = quizDetails[selectedRow]
+            firstQuizVC.context = Context(currQuestion: 0, currSubject: indexPath.row, numCorrect: 0, numWrong: 0)
         }
     }
     

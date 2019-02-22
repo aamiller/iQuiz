@@ -10,6 +10,9 @@ import UIKit
 
 class QuestionViewController: UIViewController {
     
+    
+    @IBOutlet weak var QuestionText: UILabel!
+    
     @IBOutlet var QuestionChoices: [UILabel]!
     
     @IBOutlet weak var AnswerSelectorSegment: UISegmentedControl!
@@ -18,15 +21,41 @@ class QuestionViewController: UIViewController {
     
     var quizDetails : QuizDetails? = nil
     
-    var questionData : QuestionDetails? = nil
+    var currQuestionData : QuestionDetails? = nil
+    
+    var context : Context? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        questionData = quizDetails?.questions[0]
+        currQuestionData = quizDetails!.questions[context!.currQuestion]
         
-        QuestionChoices[0].text = questionData?.answers[0]
-        QuestionChoices[1].text = questionData?.answers[1]
-        QuestionChoices[2].text = questionData?.answers[2]
-        QuestionChoices[3].text = questionData?.answers[3]
+        for i in 0...3 {
+            QuestionChoices[i].text = currQuestionData!.answers[i]
+        }
+        
+        QuestionText.text = currQuestionData?.text
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        switch segue.identifier {
+            case "QuestionToAnswerSegue":
+                print(segue.destination)
+                let answerVC = segue.destination as! AnswerViewController
+                let currSelectedAnswer = AnswerSelectorSegment.selectedSegmentIndex
+                answerVC.lastAnswer = currSelectedAnswer
+                
+                // Check if answer is correct
+                var newNumCorrect = context!.numCorrect
+                var newNumWrong = context!.numWrong
+                if currQuestionData?.answer == String(currSelectedAnswer) {
+                   newNumCorrect = newNumCorrect + 1
+                } else {
+                   newNumWrong = newNumWrong + 1
+                }
+                
+                answerVC.context = Context(currQuestion: context!.currQuestion + 1, currSubject: context!.currSubject, numCorrect: newNumCorrect, numWrong: newNumWrong)
+            default: break
+        }
     }
 }
+
