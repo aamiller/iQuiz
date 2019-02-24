@@ -79,7 +79,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     var quizDetails : [QuizDetails] = []
     var dataSource : SubjectsDataSource? = nil
-    
+    var urlString : String = "https://tednewardsandbox.site44.com/questions.json"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +98,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func fetchJSON() {
         // Code adapted from https://medium.com/@nimjea/json-parsing-in-swift-2498099b78f
-        guard let url = URL(string: "https://tednewardsandbox.site44.com/questions.json") else {return}
+        guard let url = URL(string: urlString) else {return}
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let dataResponse = data,
                 error == nil else {
@@ -142,13 +142,18 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     
     @IBAction func SettingsButtonAction(_ sender: Any) {
-        let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
-        let checkAction = UIAlertAction(title: "Check Now", style: UIAlertAction.Style.default) {
-            UIAlertAction in self.checkNowCall()
+        let alert = UIAlertController(title: "Settings", message: "", preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.text = self.urlString
         }
-        alert.addAction(checkAction)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
         
+        let saveAction = UIAlertAction(title: "OK", style: .default) { (alertAction) in
+            self.urlString = (alert.textFields![0] as UITextField).text as! String
+        }
+        
+        alert.addAction(UIAlertAction(title: "Check Now", style: UIAlertAction.Style.default) {
+            UIAlertAction in self.checkNowCall()})
+        alert.addAction(saveAction)
         self.present(alert, animated: true, completion: nil)
     }
     
