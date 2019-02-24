@@ -84,8 +84,9 @@ class ViewController: UIViewController, UITableViewDelegate {
     let userDefs = UserDefaults.standard
     var loaded : Bool = false
     
+    var refreshControl: UIRefreshControl!
+
     @IBAction func unwindToVC1(segue:UIStoryboardSegue) { }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,12 +109,24 @@ class ViewController: UIViewController, UITableViewDelegate {
         tableView.delegate = self
         tableView.tableFooterView = UIView()
         
+        // Pull to refresh adapted from https://stackoverflow.com/questions/24475792/how-to-use-pull-to-refresh-in-swift
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
+        tableView.addSubview(refreshControl)
+        
         // Load past quiz from storage if possible
         if !loaded {
             loadDataFromStorage()
             loaded = true
         }
     }
+    
+    
+    @objc func refresh(_ sender: Any) {
+        checkNowCall()
+    }
+
     
     // Fetches JSON code from user specified URL
     func fetchJSON() {
@@ -165,6 +178,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     // Checks internet connection and notifies user if internet is unreachable
     func checkNowCall() {
+        refreshControl.endRefreshing()
         switch reachability.connection {
         case .wifi:
             fetchJSON()
