@@ -73,6 +73,7 @@ class SubjectsDataSource : NSObject, UITableViewDataSource
 class ViewController: UIViewController, UITableViewDelegate {
     
     let reachability = Reachability()!
+    let homeDir = NSHomeDirectory()
     
     @IBOutlet weak var ToolBar_Settings: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
@@ -81,7 +82,6 @@ class ViewController: UIViewController, UITableViewDelegate {
     var dataSource : SubjectsDataSource? = nil
     var urlString : String = "https://tednewardsandbox.site44.com/questions.json"
     let userDefs = UserDefaults.standard
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -117,6 +117,9 @@ class ViewController: UIViewController, UITableViewDelegate {
                 DispatchQueue.main.async {
                     self.viewDidLoad()
                 }
+                
+                try dataResponse.write(to: URL(fileURLWithPath: (self.homeDir + "/quiz.json")))
+                
             } catch let parsingError {
                 let errorString : String = parsingError.localizedDescription
                 
@@ -136,12 +139,25 @@ class ViewController: UIViewController, UITableViewDelegate {
         case .cellular:
             fetchJSON()
         case .none:
-            let alert = UIAlertController(title: "Network Error", message: "Network is unreachable.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Network Error", message: "Network is unreachable. Using locally stored quiz data if exists.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
             self.present(alert, animated: true, completion: nil)
+            do {
+                let dataResponse = try Data(contentsOf: URL(fileURLWithPath: (self.homeDir + "/quiz.json")))
+                self.quizDetails = try JSONDecoder().decode([QuizDetails].self, from: dataResponse)
+                self.dataSource = SubjectsDataSource(self.quizDetails)
+                DispatchQueue.main.async {
+                    self.viewDidLoad()
+                }
+                
+            }
+            catch {
+                let alert = UIAlertController(title: "Network Error", message: "No quiz data stored locally.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+                self.present(alert, animated: true, completion: nil)
+            }
         }
     }
-    
     
     @IBAction func SettingsButtonAction(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "", preferredStyle: .alert)
