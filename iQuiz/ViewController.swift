@@ -6,10 +6,11 @@
 //  Copyright © 2019 edu.washington. All rights reserved.
 //
 
-// todo: error handling, clean up code, check if imgs can repeat TODO - fix hacky
+// todo: error handling, clean up code, comment up
 
 import UIKit
 import Foundation
+import Reachability
 
 struct QuizDetails : Codable {
     let title : String
@@ -71,14 +72,28 @@ class SubjectsDataSource : NSObject, UITableViewDataSource
 
 class ViewController: UIViewController, UITableViewDelegate {
     
+    let reachability = Reachability()!
+    
     @IBOutlet weak var ToolBar_Settings: UIBarButtonItem!
     @IBOutlet weak var tableView: UITableView!
     
     var quizDetails : [QuizDetails] = []
     var dataSource : SubjectsDataSource? = nil
     
+    var loaded : Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchJSON()
+        
+        while (!loaded) { }
+        tableView.dataSource = dataSource
+        tableView.delegate = self
+        tableView.tableFooterView = UIView()
+        loaded = false
+    }
+    
+    func fetchJSON() {
         // Code adapted from https://medium.com/@nimjea/json-parsing-in-swift-2498099b78f
         guard let url = URL(string: "https://tednewardsandbox.site44.com/questions.json") else {return}
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
@@ -90,27 +105,38 @@ class ViewController: UIViewController, UITableViewDelegate {
             do {
                 self.quizDetails = try JSONDecoder().decode([QuizDetails].self, from:dataResponse)
                 self.dataSource = SubjectsDataSource(self.quizDetails)
+                self.loaded = true
             } catch let parsingError {
                 print("Error", parsingError)
-                
             }
         }
         task.resume()
-
-        sleep(4) // TODO - fix hacky thing
-        
-        
-        tableView.dataSource = dataSource
-        tableView.delegate = self
-        tableView.tableFooterView = UIView()
+    }
+    
+    // Checks internet connection and notifies user if internet is unreachable
+    func checkNowCall() {
+        switch reachability.connection {
+        case .wifi:
+            print("Reachable via WiFi")
+        case .cellular:
+            print("Reachable via Cellular")
+        case .none:
+            print("Network not reachable")
+        }
+        print("Called")
     }
     
     
     @IBAction func SettingsButtonAction(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default, handler: { _ in
-            NSLog("The \"OK\" alert occured.")
-        }))
+        
+        let checkAction = UIAlertAction(title: "Check Now", style: UIAlertAction.Style.default) {
+            UIAlertAction in self.checkNowCall(); print("A")
+        }
+        
+        alert.addAction(checkAction)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+        
         self.present(alert, animated: true, completion: nil)
     }
     

@@ -22,8 +22,6 @@ class FinishedViewController: UIViewController {
         let sum = numWrong + numCorrect
         let percentCorrect : Double = Double(numCorrect) / Double(sum)
         
-        print("perc")
-        print(percentCorrect)
         if percentCorrect == 1 {
              ScoreComment.text = "Perfect!"
         } else if percentCorrect > 0.8 {
