@@ -83,19 +83,8 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        reachability.whenReachable = { reachability in
-            if reachability.connection == .wifi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-        }
-        
-        reachability.whenUnreachable = { _ in
-            print("Not reachable")
-        }
-        
+    
+        // Start reachability notifier
         do {
             try reachability.startNotifier()
         } catch {
@@ -113,7 +102,11 @@ class ViewController: UIViewController, UITableViewDelegate {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let dataResponse = data,
                 error == nil else {
-                    print(error?.localizedDescription ?? "Response Error")
+                    let errorString : String = error?.localizedDescription ?? "Response Error"
+
+                    let alert = UIAlertController(title: "Error Downloading Questions", message: errorString, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+                    self.present(alert, animated: true, completion: nil)
                     return
             }
             do {
@@ -123,7 +116,11 @@ class ViewController: UIViewController, UITableViewDelegate {
                     self.viewDidLoad()
                 }
             } catch let parsingError {
-                print("Error", parsingError)
+                let errorString : String = parsingError.localizedDescription
+                
+                let alert = UIAlertController(title: "Error Parsing Questions JSON", message: errorString, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+                self.present(alert, animated: true, completion: nil)
             }
         }
         task.resume()
@@ -147,7 +144,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     @IBAction func SettingsButtonAction(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
         let checkAction = UIAlertAction(title: "Check Now", style: UIAlertAction.Style.default) {
-            UIAlertAction in self.checkNowCall(); print("A")
+            UIAlertAction in self.checkNowCall()
         }
         alert.addAction(checkAction)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
