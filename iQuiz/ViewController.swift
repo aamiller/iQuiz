@@ -80,6 +80,8 @@ class ViewController: UIViewController, UITableViewDelegate {
     var quizDetails : [QuizDetails] = []
     var dataSource : SubjectsDataSource? = nil
     var urlString : String = "https://tednewardsandbox.site44.com/questions.json"
+    let userDefs = UserDefaults.standard
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -98,7 +100,7 @@ class ViewController: UIViewController, UITableViewDelegate {
     
     func fetchJSON() {
         // Code adapted from https://medium.com/@nimjea/json-parsing-in-swift-2498099b78f
-        guard let url = URL(string: urlString) else {return}
+        guard let url = URL(string: userDefs.string(forKey: "URL") ?? "error") else {return}
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let dataResponse = data,
                 error == nil else {
@@ -144,11 +146,12 @@ class ViewController: UIViewController, UITableViewDelegate {
     @IBAction func SettingsButtonAction(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "", preferredStyle: .alert)
         alert.addTextField { textField in
-            textField.text = self.urlString
+            textField.text = self.userDefs.string(forKey: "URL")
         }
         
         let saveAction = UIAlertAction(title: "OK", style: .default) { (alertAction) in
-            self.urlString = (alert.textFields![0] as UITextField).text as! String
+            let urlString = (alert.textFields![0] as UITextField).text
+            self.userDefs.set(urlString, forKey: "URL")
         }
         
         alert.addAction(UIAlertAction(title: "Check Now", style: UIAlertAction.Style.default) {
