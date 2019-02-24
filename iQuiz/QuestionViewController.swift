@@ -22,12 +22,10 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Update UI elements
         currQuestionData = quizDetails!.questions[context!.currQuestion]
-        
-        for i in 0...3 {
-            QuestionChoices[i].text = currQuestionData!.answers[i]
-        }
-        
+        for i in 0...3 { QuestionChoices[i].text = currQuestionData!.answers[i] }
         QuestionText.text = currQuestionData?.text
     }
     

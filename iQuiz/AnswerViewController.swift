@@ -23,6 +23,7 @@ class AnswerViewController: UIViewController {
         currQuestionData = quizDetails!.questions[context!.currQuestion]
         QuestionTextLabel.text = currQuestionData!.text
         
+        // Update elements based on correct/wrong answers and the user's response
         for i in 0...3 {
             let currLabel = AnswerTextLabels[i]
             currLabel.text = currQuestionData!.answers[i]
