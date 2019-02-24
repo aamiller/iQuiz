@@ -80,17 +80,31 @@ class ViewController: UIViewController, UITableViewDelegate {
     var quizDetails : [QuizDetails] = []
     var dataSource : SubjectsDataSource? = nil
     
-    var loaded : Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchJSON()
         
-        while (!loaded) { }
+        reachability.whenReachable = { reachability in
+            if reachability.connection == .wifi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+        }
+        
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+        }
+        
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
+
         tableView.dataSource = dataSource
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        loaded = false
     }
     
     func fetchJSON() {
@@ -105,7 +119,9 @@ class ViewController: UIViewController, UITableViewDelegate {
             do {
                 self.quizDetails = try JSONDecoder().decode([QuizDetails].self, from:dataResponse)
                 self.dataSource = SubjectsDataSource(self.quizDetails)
-                self.loaded = true
+                DispatchQueue.main.async {
+                    self.viewDidLoad()
+                }
             } catch let parsingError {
                 print("Error", parsingError)
             }
@@ -117,23 +133,22 @@ class ViewController: UIViewController, UITableViewDelegate {
     func checkNowCall() {
         switch reachability.connection {
         case .wifi:
-            print("Reachable via WiFi")
+            fetchJSON()
         case .cellular:
-            print("Reachable via Cellular")
+            fetchJSON()
         case .none:
-            print("Network not reachable")
+            let alert = UIAlertController(title: "Network Error", message: "Network is unreachable.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
+            self.present(alert, animated: true, completion: nil)
         }
-        print("Called")
     }
     
     
     @IBAction func SettingsButtonAction(_ sender: Any) {
         let alert = UIAlertController(title: "Settings", message: "Settings go here", preferredStyle: .alert)
-        
         let checkAction = UIAlertAction(title: "Check Now", style: UIAlertAction.Style.default) {
             UIAlertAction in self.checkNowCall(); print("A")
         }
-        
         alert.addAction(checkAction)
         alert.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: "Default action"), style: .default))
         
