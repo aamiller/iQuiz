@@ -454,7 +454,7 @@
                                 <color key="tintColor" red="0.1215686277" green="0.1294117719" blue="0.1411764771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Back to Quiz List"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="vgK-Bh-7UE"/>
+                                    <segue destination="xaY-Qr-UOh" kind="unwind" unwindAction="unwindToVC1WithSegue:" id="6Jl-BG-0RP"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -484,6 +484,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qpz-q8-zA1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="xaY-Qr-UOh" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2256.8000000000002" y="133.5832083958021"/>
         </scene>
